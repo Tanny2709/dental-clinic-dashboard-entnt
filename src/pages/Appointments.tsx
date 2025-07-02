@@ -50,7 +50,7 @@ const Appointments = () => {
       cost: formData.cost ? Number(formData.cost) : undefined,
       files: []
     };
-    
+
     if (editingIncident) {
       updateIncident(editingIncident, incidentData);
     } else {
@@ -92,7 +92,7 @@ const Appointments = () => {
     }
   };
 
-  const sortedIncidents = [...incidents].sort((a, b) => 
+  const sortedIncidents = [...incidents].sort((a, b) =>
     new Date(b.appointmentDate).getTime() - new Date(a.appointmentDate).getTime()
   );
 
@@ -103,7 +103,7 @@ const Appointments = () => {
           <h1 className="text-3xl font-bold text-gray-900">Appointments</h1>
           <p className="text-gray-600 mt-2">Manage patient appointments and treatments</p>
         </div>
-        
+
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={resetForm} className="flex items-center gap-2">
@@ -119,11 +119,11 @@ const Appointments = () => {
                   {editingIncident ? 'Update appointment details.' : 'Schedule a new appointment for a patient.'}
                 </DialogDescription>
               </DialogHeader>
-              
+
               <div className="grid gap-4 py-4 max-h-96 overflow-y-auto">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="patientId" className="text-right">Patient</Label>
-                  <Select value={formData.patientId} onValueChange={(value) => setFormData({...formData, patientId: value})}>
+                  <Select value={formData.patientId} onValueChange={(value) => setFormData({ ...formData, patientId: value })}>
                     <SelectTrigger className="col-span-3">
                       <SelectValue placeholder="Select patient" />
                     </SelectTrigger>
@@ -136,45 +136,45 @@ const Appointments = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="title" className="text-right">Title</Label>
                   <Input
                     id="title"
                     value={formData.title}
-                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="col-span-3"
                     placeholder="e.g., Routine Cleaning"
                     required
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="description" className="text-right">Description</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
-                    onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     className="col-span-3"
                     required
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="appointmentDate" className="text-right">Date & Time</Label>
                   <Input
                     id="appointmentDate"
                     type="datetime-local"
                     value={formData.appointmentDate}
-                    onChange={(e) => setFormData({...formData, appointmentDate: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, appointmentDate: e.target.value })}
                     className="col-span-3"
                     required
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="status" className="text-right">Status</Label>
-                  <Select value={formData.status} onValueChange={(value: any) => setFormData({...formData, status: value})}>
+                  <Select value={formData.status} onValueChange={(value: any) => setFormData({ ...formData, status: value })}>
                     <SelectTrigger className="col-span-3">
                       <SelectValue />
                     </SelectTrigger>
@@ -186,28 +186,28 @@ const Appointments = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="comments" className="text-right">Comments</Label>
                   <Textarea
                     id="comments"
                     value={formData.comments}
-                    onChange={(e) => setFormData({...formData, comments: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, comments: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="treatment" className="text-right">Treatment</Label>
                   <Input
                     id="treatment"
                     value={formData.treatment}
-                    onChange={(e) => setFormData({...formData, treatment: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, treatment: e.target.value })}
                     className="col-span-3"
                     placeholder="e.g., Root canal therapy"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="cost" className="text-right">Cost ($)</Label>
                   <Input
@@ -215,23 +215,23 @@ const Appointments = () => {
                     type="number"
                     step="0.01"
                     value={formData.cost}
-                    onChange={(e) => setFormData({...formData, cost: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
-                
+
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="nextDate" className="text-right">Next Visit</Label>
                   <Input
                     id="nextDate"
                     type="datetime-local"
                     value={formData.nextDate}
-                    onChange={(e) => setFormData({...formData, nextDate: e.target.value})}
+                    onChange={(e) => setFormData({ ...formData, nextDate: e.target.value })}
                     className="col-span-3"
                   />
                 </div>
               </div>
-              
+
               <DialogFooter>
                 <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                   Cancel
@@ -270,7 +270,7 @@ const Appointments = () => {
                       </CardDescription>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <Badge className={getStatusColor(incident.status)}>
                       {incident.status}
@@ -296,14 +296,14 @@ const Appointments = () => {
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-3">
                 <p className="text-sm text-gray-600">{incident.description}</p>
-                
+
                 {incident.comments && (
                   <p className="text-sm text-gray-500 italic">Comments: {incident.comments}</p>
                 )}
-                
+
                 <div className="flex flex-wrap gap-4 text-sm">
                   {incident.treatment && (
                     <span className="text-gray-600">
@@ -317,7 +317,7 @@ const Appointments = () => {
                     </span>
                   )}
                 </div>
-                
+
                 {incident.nextDate && (
                   <p className="text-sm text-blue-600">
                     Next visit: {format(new Date(incident.nextDate), 'MMM dd, yyyy HH:mm')}
