@@ -33,11 +33,11 @@ const CalendarPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'Completed': return 'bg-green-100 text-green-800';
-      case 'In Progress': return 'bg-yellow-100 text-yellow-800';
-      case 'Scheduled': return 'bg-blue-100 text-blue-800';
-      case 'Cancelled': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'Completed': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+      case 'In Progress': return 'bg-amber-100 text-amber-700 border-amber-200';
+      case 'Scheduled': return 'bg-sky-100 text-sky-700 border-sky-200';
+      case 'Cancelled': return 'bg-rose-100 text-rose-700 border-rose-200';
+      default: return 'bg-slate-100 text-slate-700 border-slate-200';
     }
   };
 
@@ -49,26 +49,27 @@ const CalendarPage = () => {
   }, [incidents]);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Calendar</h1>
-        <p className="text-gray-600 mt-2">View and manage your appointment schedule</p>
+    <div className="space-y-8 bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen p-6">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+        <h1 className="text-3xl font-bold text-slate-800">Calendar</h1>
+        <p className="text-slate-600 mt-2">View and manage your appointment schedule</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Calendar Section */}
         <div className="lg:col-span-2">
-          <Card>
-            <CardHeader>
+          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg">
               <div className="flex justify-between items-center">
-                <CardTitle className="flex items-center gap-2">
-                  <CalendarIcon className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <CalendarIcon className="h-6 w-6" />
                   {format(currentMonth, 'MMMM yyyy')}
                 </CardTitle>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
+                    className="bg-white/20 border-white/30 text-white hover:bg-white/30"
                     onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
                   >
                     <ChevronLeft className="h-4 w-4" />
@@ -76,6 +77,7 @@ const CalendarPage = () => {
                   <Button
                     variant="outline"
                     size="sm"
+                    className="bg-white/20 border-white/30 text-white hover:bg-white/30"
                     onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
                   >
                     <ChevronRight className="h-4 w-4" />
@@ -83,7 +85,7 @@ const CalendarPage = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <Calendar
                 mode="single"
                 selected={selectedDate}
@@ -94,11 +96,11 @@ const CalendarPage = () => {
               />
               
               {/* Mini appointment indicators */}
-              <div className="mt-4 space-y-2">
-                <h4 className="font-medium text-sm text-gray-700">Quick Overview</h4>
-                <div className="grid grid-cols-7 gap-1 text-xs">
+              <div className="mt-6 space-y-3">
+                <h4 className="font-semibold text-slate-700">Quick Overview</h4>
+                <div className="grid grid-cols-7 gap-2 text-sm">
                   {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="text-center font-medium text-gray-500 p-1">
+                    <div key={day} className="text-center font-medium text-slate-500 p-2">
                       {day}
                     </div>
                   ))}
@@ -107,14 +109,14 @@ const CalendarPage = () => {
                     return (
                       <div
                         key={day.toISOString()}
-                        className="text-center p-1 h-8 flex items-center justify-center relative cursor-pointer hover:bg-gray-50 rounded"
+                        className="text-center p-2 h-10 flex items-center justify-center relative cursor-pointer hover:bg-blue-50 rounded-lg transition-colors"
                         onClick={() => setSelectedDate(day)}
                       >
-                        <span className={isSameDay(day, selectedDate) ? 'font-bold text-blue-600' : ''}>
+                        <span className={isSameDay(day, selectedDate) ? 'font-bold text-blue-600' : 'text-slate-600'}>
                           {format(day, 'd')}
                         </span>
                         {dayAppointments.length > 0 && (
-                          <div className="absolute bottom-0 right-0 w-2 h-2 bg-blue-500 rounded-full text-white text-xs flex items-center justify-center">
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full text-white text-xs flex items-center justify-center shadow-sm">
                             {dayAppointments.length}
                           </div>
                         )}
@@ -130,76 +132,78 @@ const CalendarPage = () => {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Selected Date Appointments */}
-          <Card>
-            <CardHeader>
+          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-t-lg">
               <CardTitle className="text-lg">
                 {format(selectedDate, 'EEEE, MMMM dd')}
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-white/80">
                 {appointmentsForDate.length} appointment{appointmentsForDate.length !== 1 ? 's' : ''}
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-4 p-6">
               {appointmentsForDate.length > 0 ? (
                 appointmentsForDate.map((appointment) => {
                   const patient = patients.find(p => p.id === appointment.patientId);
                   return (
-                    <div key={appointment.id} className="p-3 border rounded-lg space-y-2">
+                    <div key={appointment.id} className="p-4 border border-slate-200 rounded-lg space-y-3 bg-slate-50/50">
                       <div className="flex justify-between items-start">
-                        <h4 className="font-medium text-sm">{appointment.title}</h4>
-                        <Badge className={getStatusColor(appointment.status)} size="sm">
+                        <h4 className="font-semibold text-slate-800">{appointment.title}</h4>
+                        <Badge className={getStatusColor(appointment.status)}>
                           {appointment.status}
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-600">
-                        <Clock className="h-3 w-3" />
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <Clock className="h-4 w-4 text-blue-500" />
                         {format(new Date(appointment.appointmentDate), 'HH:mm')}
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-600">
-                        <User className="h-3 w-3" />
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <User className="h-4 w-4 text-teal-500" />
                         {patient?.name}
                       </div>
-                      <p className="text-xs text-gray-500">{appointment.description}</p>
+                      <p className="text-sm text-slate-600 bg-white p-2 rounded">{appointment.description}</p>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-sm text-gray-500 text-center py-4">
-                  No appointments scheduled
-                </p>
+                <div className="text-center py-8">
+                  <CalendarIcon className="h-12 w-12 text-slate-300 mx-auto mb-3" />
+                  <p className="text-slate-500">No appointments scheduled</p>
+                </div>
               )}
             </CardContent>
           </Card>
 
           {/* Upcoming Appointments */}
-          <Card>
-            <CardHeader>
+          <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-t-lg">
               <CardTitle className="text-lg">Upcoming Appointments</CardTitle>
-              <CardDescription>Next 10 scheduled appointments</CardDescription>
+              <CardDescription className="text-white/80">Next 10 scheduled appointments</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 p-6">
               {upcomingAppointments.length > 0 ? (
                 upcomingAppointments.map((appointment) => {
                   const patient = patients.find(p => p.id === appointment.patientId);
                   return (
-                    <div key={appointment.id} className="p-2 border rounded space-y-1">
+                    <div key={appointment.id} className="p-3 border border-slate-200 rounded-lg space-y-2 bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
                       <div className="flex justify-between items-start">
-                        <p className="font-medium text-sm">{appointment.title}</p>
-                        <Badge variant="outline" size="sm">
+                        <p className="font-medium text-slate-800">{appointment.title}</p>
+                        <Badge variant="outline" className="border-slate-300 text-slate-600">
                           {appointment.status}
                         </Badge>
                       </div>
-                      <p className="text-xs text-gray-600">{patient?.name}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm text-slate-600">{patient?.name}</p>
+                      <p className="text-sm text-blue-600 font-medium">
                         {format(new Date(appointment.appointmentDate), 'MMM dd, HH:mm')}
                       </p>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-sm text-gray-500 text-center py-4">
-                  No upcoming appointments
-                </p>
+                <div className="text-center py-8">
+                  <Clock className="h-12 w-12 text-slate-300 mx-auto mb-3" />
+                  <p className="text-slate-500">No upcoming appointments</p>
+                </div>
               )}
             </CardContent>
           </Card>
