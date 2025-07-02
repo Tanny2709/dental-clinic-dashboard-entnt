@@ -10,6 +10,10 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Layout from "@/components/Layout";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
+import Patients from "@/pages/Patients";
+import Appointments from "@/pages/Appointments";
+import CalendarPage from "@/pages/CalendarPage";
+import MyAppointments from "@/pages/MyAppointments";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +34,22 @@ const App = () => (
                 </ProtectedRoute>
               }>
                 <Route index element={<Dashboard />} />
+                <Route path="patients" element={
+                  <ProtectedRoute adminOnly>
+                    <Patients />
+                  </ProtectedRoute>
+                } />
+                <Route path="appointments" element={
+                  <ProtectedRoute adminOnly>
+                    <Appointments />
+                  </ProtectedRoute>
+                } />
+                <Route path="calendar" element={
+                  <ProtectedRoute adminOnly>
+                    <CalendarPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="my-appointments" element={<MyAppointments />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -181,7 +181,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const updateIncident = (id: string, incidentData: Partial<Incident>) => {
     const updatedIncidents = incidents.map(i => 
-      i.id === i ? { ...i, ...incidentData } : i
+      i.id === id ? { ...i, ...incidentData } : i
     );
     setIncidents(updatedIncidents);
     saveToStorage('dentalIncidents', updatedIncidents);
